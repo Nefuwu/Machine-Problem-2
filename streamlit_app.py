@@ -25,8 +25,8 @@ def main():
                 "a": [a],
                 "b": [b],
                 "c": [c],
-                "d": [d],
-                "e": [e],
+                "f(c)": [d],
+                "|a-b|": [e],
             }
             df = pd.DataFrame(data)
 
@@ -63,8 +63,8 @@ def main():
                 "a": [a],
                 "b": [b],
                 "c": [c],
-                "d": [d],
-                "e": [e],
+                "f(c)": [d],
+                "|a-b|": [e],
             }
             df = pd.DataFrame(data)
 
@@ -78,7 +78,7 @@ def main():
                 d = math.tanh(c)
                 e = abs(a-b)
 
-                new_row = {'a': a, 'b': b, 'c': c, 'd': d, 'e':[e]}
+                new_row = {'a': a, 'b': b, 'c': c, 'f(c)': d, '|a-b|':[e]}
                 df = pd.concat([df, pd.DataFrame(new_row)])
 
             st.write("---")
@@ -108,12 +108,12 @@ def main():
                 e = (b - ((d)*(b-a)/(d-c)))
                 f = abs(e-b)
                 data = {
-                    "a": [a],
-                    "b": [b],
-                    "c": [c],
-                    "d": [d],
-                    "e": [e],
-                    "f": [f],
+                    "Xi-1": [a],
+                    "Xi": [b],
+                    "f(Xi-1)": [c],
+                    "f(Xi)": [d],
+                    "Xi+1": [e],
+                    "|Xi+1 - Xi|": [f],
                 }
                 df = pd.DataFrame(data)
 
@@ -129,7 +129,7 @@ def main():
                     e = b - ((d)*(b-a)/(d-c))
                     f = abs(e-b)
 
-                    new_row = {'a': a, 'b': b, 'c': c, 'd': d, 'e': e, 'f': [f]}
+                    new_row = {'Xi-1': a, 'Xi': b, 'f(Xi-1)': c, 'f(Xi)': d, 'Xi+1': e, '|Xi+1 - Xi|': [f]}
                     df = pd.concat([df, pd.DataFrame(new_row)])
 
                 st.write("---")
@@ -149,12 +149,12 @@ def main():
             e = (b - ((d)*(b-a)/(d-c)))
             f = abs(e-b)
             data = {
-                "a": [a],
-                "b": [b],
-                "c": [c],
-                "d": [d],
-                "e": [e],
-                "f": [f],
+                "Xi-1": [a],
+                "Xi": [b],
+                "f(Xi-1)": [c],
+                "f(Xi)": [d],
+                "Xi+1": [e],
+                "|Xi+1 - Xi|": [f],
             }
             df = pd.DataFrame(data)
 
@@ -169,7 +169,7 @@ def main():
                 e = b - ((d)*(b-a)/(d-c))
                 f = abs(e-b)
 
-                new_row = {'a': a, 'b': b, 'c': c, 'd': d, 'e': e, 'f': [f]}
+                new_row = {'Xi-1': a, 'Xi': b, 'f(Xi-1)': c, 'f(Xi)': d, 'Xi+1': e, '|Xi+1 - Xi|': [f]}
                 df = pd.concat([df, pd.DataFrame(new_row)])
 
             st.write("---")
