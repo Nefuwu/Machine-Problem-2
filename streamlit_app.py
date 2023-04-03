@@ -130,8 +130,8 @@ def main():
                     a = tempa
                     b = tempb
                     count += 1
-                    c = math.pow(math.e,-a)-a  
-                    d = math.pow(math.e,-b)-b  
+                    c = math.tanh(a)    
+                    d = math.tanh(b) 
                     e = b - ((d)*(b-a)/(d-c))
                     f = abs(e-b)
 
