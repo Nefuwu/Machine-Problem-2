@@ -1,11 +1,7 @@
-import math
-
 import streamlit as st
-from sympy import *
 import pandas as pd
 import numpy as np
-from array import *
-from math import *
+import math
 
 st.set_page_config(page_title="Bisection Method Table", page_icon=":memo:")
 
