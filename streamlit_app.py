@@ -1,12 +1,18 @@
+import math
+
 import streamlit as st
+from sympy import *
 import pandas as pd
 import numpy as np
-import math
+from array import *
+from math import *
 
 st.set_page_config(page_title="Bisection Method Table", page_icon=":memo:")
 
 
 def main():
+    
+
     tab1, tab2 = st.tabs(["Bisection", "Secant"])
     with tab1:
         st.title("Bisection Method")
@@ -53,7 +59,9 @@ def main():
             st.write("---")
             st.write("Table:")
             df.index = np.arange(1, len(df) + 1)
-            st.write(df)
+            st.table(df)
+            st.markdown("<span style='color:green'>Note: <br>the table can only show values up to 4 decimal places</span>", unsafe_allow_html=True)
+
 
         else:
             error = st.number_input("Enter error", value = 0.01)
@@ -91,7 +99,10 @@ def main():
             st.write("---")
             st.write("Table:")
             df.index = np.arange(1, len(df) + 1)
-            st.write(df)
+            
+            st.table(df.style.format(precision=15))
+
+            st.markdown("<span style='color:green'>Note: <br>the table can only show values up to 4 decimal places</span>", unsafe_allow_html=True)
 
 
     with tab2:
@@ -147,7 +158,9 @@ def main():
                 st.write("---")
                 st.write("Table:")
                 df.index = np.arange(1, len(df) + 1)
-                st.write(df)
+                st.table(df)
+                st.markdown("<span style='color:green'>Note: <br>the table can only show values up to 4 decimal places</span>", unsafe_allow_html=True)
+
 
         else:
             error = st.number_input("Enter error ",min_value=0.00001 , step=1e-5, format="%.5f")
@@ -187,7 +200,9 @@ def main():
             st.write("---")
             st.write("Table:")
             df.index = np.arange(1, len(df) + 1)
-            st.write(df)
+            st.table(df)
+            st.markdown("<span style='color:green'>Note: <br>the table can only show values up to 4 decimal places</span>", unsafe_allow_html=True)
+
 
 if __name__ == '__main__':
     main()
