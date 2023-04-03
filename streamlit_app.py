@@ -11,40 +11,41 @@ def main():
     with tab1:
         st.title("Bisection Method")
         st.text("Function: tanh(x)")
-        a = st.number_input("Enter a", value = 0)
-        b = st.number_input("Enter b", value = 0)
+        a = st.number_input("Enter a", value = 0.0)
+        b = st.number_input("Enter b", value = 0.0)
 
         choice = st.radio('Pick one', ['Iteration', 'Error'])
         if choice == 'Iteration':
             count = 2
-            error = st.number_input("Enter error", value = 1)
+            error = st.number_input("Enter Iterations", min_value=1)
+            st.write("Entered Values:")
+            st.write("A = ", a)
+            st.write("B = ", b)
+            st.write("Iterations = ", error)
             c = (a+b)/2
             d = math.tanh(c)
             e = abs(a-b)
             data = {
-                "a": [a],
-                "b": [b],
-                "c": [c],
-                "f(c)": [d],
-                "|a-b|": [e],
+                "a": [a], "b": [b], "c": [c], "f(c)": [d], "|a-b|": [e],
             }
             df = pd.DataFrame(data)
 
             while count <= error:
-                if d < 0:
-                    b = c
-                else:
+                if (math.tanh(a))*d > 0:
                     a = c
+                elif (math.tanh(b))*d > 0:
+                    b = c
 
                 count += 1
                 c = (a+b)/2
                 d = math.tanh(c)
                 e = abs(a-b)
 
-                new_row = {'a': a, 'b': b, 'c': c, 'd': d, 'e':[e]}
+                new_row = {'a': a, 'b': b, 'c': c, 'f(c)': d, '|a-b|':[e]}
                 df = pd.concat([df, pd.DataFrame(new_row)])
 
             st.write("---")
+            st.subheader("Answers")
             st.write("Cn= ", c)
             st.write("f(Cn)= ", d)
 
@@ -56,23 +57,23 @@ def main():
 
         else:
             error = st.number_input("Enter error", value = 0.01)
+            st.write("Entered Values:")
+            st.write("A = ", a)
+            st.write("B = ", b)
+            st.write("Error = ", error)
             c = (a+b)/2
             d = math.tanh(c)
             e = abs(a-b)
             data = {
-                "a": [a],
-                "b": [b],
-                "c": [c],
-                "f(c)": [d],
-                "|a-b|": [e],
+                "a": [a], "b": [b], "c": [c], "f(c)": [d], "|a-b|": [e],
             }
             df = pd.DataFrame(data)
 
             while error <= e:
-                if d < 0:
-                    b = c
-                else:
+                if (math.tanh(a))*d > 0:
                     a = c
+                elif (math.tanh(b))*d > 0:
+                    b = c
 
                 c = (a+b)/2
                 d = math.tanh(c)
@@ -82,6 +83,7 @@ def main():
                 df = pd.concat([df, pd.DataFrame(new_row)])
 
             st.write("---")
+            st.subheader("Answers")
             st.write("Cn= ", c)
             st.write("f(Cn)= ", d)
 
@@ -96,24 +98,28 @@ def main():
         st.title("Secant Method")
         st.text("Function: tanh(x)")
 
-        a = st.number_input("Enter X₀", min_value=1)
-        b = st.number_input("Enter X₁", min_value=0.00001)
+        a = st.number_input("Enter X₀", value = 2.00)
+        b = st.number_input("Enter X₁", value=1.0, step=0.01)
+        st.markdown("<span style='color:red'>0 as an input for X₁ will not work on tanh(x) </span>", unsafe_allow_html=True)
+        while float(b) == 0.0:
+            st.warning("Please enter a non-zero value.")
+            b = st.number_input("Enter X₁", value=1.0, step=0.01)
+
 
         choice = st.radio('Pick one ', ['Iteration', 'Error'])
         if choice == 'Iteration':
                 count = 2
                 error = st.number_input("Enter error ", value = 1)
+                st.write("Entered Values:")
+                st.write("A = ", a)
+                st.write("B = ", b)
+                st.write("Iterations = ", error)
                 c = math.tanh(a)    
                 d = math.tanh(b)
                 e = (b - ((d)*(b-a)/(d-c)))
                 f = abs(e-b)
                 data = {
-                    "Xi-1": [a],
-                    "Xi": [b],
-                    "f(Xi-1)": [c],
-                    "f(Xi)": [d],
-                    "Xi+1": [e],
-                    "|Xi+1 - Xi|": [f],
+                    "Xi-1": [a], "Xi": [b], "f(Xi-1)": [c], "f(Xi)": [d], "Xi+1": [e], "|Xi+1 - Xi|": [f],
                 }
                 df = pd.DataFrame(data)
 
@@ -124,8 +130,8 @@ def main():
                     a = tempa
                     b = tempb
                     count += 1
-                    c = math.tanh(a)
-                    d = math.tanh(b)
+                    c = math.pow(math.e,-a)-a  
+                    d = math.pow(math.e,-b)-b  
                     e = b - ((d)*(b-a)/(d-c))
                     f = abs(e-b)
 
@@ -133,8 +139,9 @@ def main():
                     df = pd.concat([df, pd.DataFrame(new_row)])
 
                 st.write("---")
-                st.write("Cn= ", c)
-                st.write("f(Cn)= ", d)
+                st.subheader("Answers")
+                st.write("Cn= ", e)
+                st.write("f(Cn)= ", math.tanh(e))
 
                 # Display the dataframe in a table
                 st.write("---")
@@ -143,18 +150,17 @@ def main():
                 st.write(df)
 
         else:
-            error = st.number_input("Enter error ", min_value=0.00001, max_value=1.0, step=1e-5, format="%.5f")
+            error = st.number_input("Enter error ",min_value=0.00001 , step=1e-5, format="%.5f")
+            st.write("Entered Values:")
+            st.write("A = ", a)
+            st.write("B = ", b)
+            st.write("Error = ", error)
             c = math.tanh(a)    
             d = math.tanh(b)
             e = (b - ((d)*(b-a)/(d-c)))
             f = abs(e-b)
             data = {
-                "Xi-1": [a],
-                "Xi": [b],
-                "f(Xi-1)": [c],
-                "f(Xi)": [d],
-                "Xi+1": [e],
-                "|Xi+1 - Xi|": [f],
+                "Xi-1": [a], "Xi": [b], "f(Xi-1)": [c], "f(Xi)": [d], "Xi+1": [e], "|Xi+1 - Xi|": [f],
             }
             df = pd.DataFrame(data)
 
@@ -173,8 +179,9 @@ def main():
                 df = pd.concat([df, pd.DataFrame(new_row)])
 
             st.write("---")
-            st.write("Cn= ", c)
-            st.write("f(Cn)= ", d)
+            st.subheader("Answers")
+            st.write("Cn= ", e)
+            st.write("f(Cn)= ", math.tanh(e))
 
             # Display the dataframe in a table
             st.write("---")
@@ -182,6 +189,5 @@ def main():
             df.index = np.arange(1, len(df) + 1)
             st.write(df)
 
-        
 if __name__ == '__main__':
     main()
