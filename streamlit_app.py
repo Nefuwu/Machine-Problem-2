@@ -96,7 +96,7 @@ def main():
             st.write("Table:")
             df.index = np.arange(1, len(df) + 1)
             
-            st.table(df.style.format(precision=15))
+            st.table(df)
 
             st.markdown("<span style='color:green'>Note: <br>the table can only show values up to 4 decimal places</span>", unsafe_allow_html=True)
 
