@@ -105,12 +105,15 @@ def main():
         st.title("Secant Method")
         st.text("Function: tanh(x)")
 
-        a = st.number_input("Enter X₀", value = 2.00)
-        b = st.number_input("Enter X₁", value=1.0, step=0.01)
+        a = st.number_input("Enter X₀", value = 2, min_value=-2, max_value=2)
+        b = st.number_input("Enter X₁", value=1, min_value=-2, max_value=2)
         st.markdown("<span style='color:red'>0 as an input for X₁ will not work on tanh(x) </span>", unsafe_allow_html=True)
-        while float(b) == 0.0:
+        while abs(float(b)) == abs(float(a)):
+            st.warning("Inputs should not be equal to the absolute value of each other")
+            b = st.number_input("Enter X₁", value=1, min_value=-2, max_value=2)
+        while (float(b)) == 0.0 or float(a) == 0:
             st.warning("Please enter a non-zero value.")
-            b = st.number_input("Enter X₁", value=1.0, step=0.01)
+            b = st.number_input("Enter X₁", value=1, min_value=-2, max_value=2)
 
 
         choice = st.radio('Pick one ', ['Iteration', 'Error'])
