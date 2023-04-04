@@ -119,7 +119,7 @@ def main():
         choice = st.radio('Pick one ', ['Iteration', 'Error'])
         if choice == 'Iteration':
                 count = 2
-                error = st.number_input("Enter error ", value = 1)
+                error = st.number_input("Enter error ", min_value=1)
                 st.write("Entered Values:")
                 st.write("A = ", a)
                 st.write("B = ", b)
